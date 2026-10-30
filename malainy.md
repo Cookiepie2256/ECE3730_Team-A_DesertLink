@@ -8,10 +8,10 @@ A fun team project with a search-and-rescue connection
 | Name | GitHub Username | Responsibility |
 |------|-----------------|----------------|
 | Malainy | malainyl | data packing |
-| Gage | [Username] | gps module |
-| Kevin | [Username] | multi-node monitoring |
-| Tanner | [Username] | wireless communication |
-| Andy | [Username] | environmental sensor |
+| Gage | gbo012 | gps module |
+| Kevin | EliteDarkLord35 | multi-node monitoring |
+| Tanner | tanjeffris | wireless communication |
+| Andy | Andy-Holt | environmental sensor |
 
 ## Individual Contribution: Malainy
 
