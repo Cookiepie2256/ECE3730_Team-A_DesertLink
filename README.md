@@ -62,12 +62,17 @@ Describe the method your team chose. Include how each node knows when it may tra
 
 **Agreed method:**
 
-- Node 1:
-- Node 2:
-- Node 3:
-- Base station role, if applicable:
-- Transmission interval or schedule:
-- What happens if a node misses its scheduled turn:
+- Node 1: Assigned to Time Slot 1 (e.g., seconds 0–5 of the cycle). It wakes up, transmits its 20-byte packet, listens for any relay forwarding requirements, and then returns to a low-power sleep state.
+
+- Node 2: Assigned to Time Slot 2 (e.g., seconds 5–10). Transmits its packet during its designated window and can act as a multi-hop relay to forward Node 3's packet if Node 3 is out of direct range of the base station.
+
+- Node 3: Assigned to Time Slot 3 (e.g., seconds 10–15). Transmits its packet during its slot and leverages neighboring nodes (Nodes 1 or 2) as relays if its direct link to the base station is blocked or weak.
+
+- Base station role, if applicable: Acts as the network coordinator by listening across all time slots, receiving telemetry data, logging packets, and optionally broadcasting a short synchronization beacon at the start of each cycle to keep all nodes aligned.
+
+- Transmission interval or schedule: A synchronized Time-Division Multiple Access (TDMA) rolling schedule operating on a fixed 30-second cycle, ensuring only one node transmits at any given micro-second.
+
+- What happens if a node misses its scheduled turn: If a node experiences a delay (e.g., a delayed GPS fix) and misses its time slot, it holds its data and waits for the next cycle, while the base station logs a missing packet for that specific node and sequence number.
 
 ### 2. What happens if a packet is missed or delayed?
 
