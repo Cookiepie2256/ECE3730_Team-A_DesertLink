@@ -32,15 +32,16 @@ Agree on the fields each sensor node will send to the base station. For every fi
 Describe how your team will encode each value. For example, will the packet use binary values or readable text? If you scale a value before storing it as an integer, document the scale.
 
 | Field | Encoding / compression method | Example |
-|Node ID|1-byte unsigned integer (uint8_t) transmitted directly as binary.| 0x01 (Node 1)|
-|Sequence number|2-byte unsigned integer (uint16_t) transmitted directly as binary.|0x00A2 (Sequence 162)|
-|Elapsed time|4-byte unsigned integer (uint32_t) representing milliseconds since startup.|"0x000186A0 (100,000 ms)"|
-|GPS latitude|4-byte signed integer (int32_t) scaled by 107.|371041000 (37.104100° N)|
-|GPS longitude|4-byte signed integer (int32_t) scaled by 107.|-1135841000 (-113.584100° W)|
-|GPS speed|2-byte unsigned integer (uint16_t) scaled by 100.|542 (5.42 m/s)|
-|Temperature|1-byte signed integer (int8_t) with a +40°F offset.|112 (72°F)|
-|Humidity|1-byte unsigned integer (uint8_t) scaled by 2.|90 (45.0% RH)|
-|Status / validity,1-byte bitfield (uint8_t) indicating sensor validity flags.|0x03 (All valid)|
+|---|---|---|
+| Node ID | 1-byte unsigned integer (`uint8_t`) transmitted directly as binary. | `0x01` (Node 1) |
+| Sequence number | 2-byte unsigned integer (`uint16_t`) transmitted directly as binary. | `0x00A2` (Sequence 162) |
+| Elapsed time | 4-byte unsigned integer (`uint32_t`) representing milliseconds since startup. | `0x000186A0` (100,000 ms) |
+| GPS latitude | 4-byte signed integer (`int32_t`) scaled by $10^7$. | `371041000` (37.104100° N) |
+| GPS longitude | 4-byte signed integer (`int32_t`) scaled by $10^7$. | `-1135841000` (-113.584100° W) |
+| GPS speed | 2-byte unsigned integer (`uint16_t`) scaled by $100$. | `542` (5.42 m/s) |
+| Temperature | 1-byte signed integer (`int8_t`) with a +40°F offset. | `112` (72°F) |
+| Humidity | 1-byte unsigned integer (`uint8_t`) scaled by $2$. | `90` (45.0% RH) |
+| Status / validity | 1-byte bitfield (`uint8_t`) indicating sensor validity flags. | `0x03`  |
 
 
 **Other information needed to interpret the packet:**
