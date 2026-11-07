@@ -57,7 +57,7 @@ void loop() {
 
     delay(1000);
 }
-'''
+```
 
 ## 2. Testing and Results
 
