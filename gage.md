@@ -61,12 +61,12 @@ void loop() {
 
 ## 2. Testing and Results
 
-| Test item | Description |
-|---|---|
-| **Test setup** | RAK4631 WisBlock Core mounted on RAK5005-O Base Board with RAK12501 GNSS module installed in Slot C (UART). Tested outdoors with a clear view of the sky. Connected to a PC via USB for Serial Monitor output at 115200 baud. |
-| **Test procedure** | 1. Uploaded the test sketch to the RAK4631.<br>2. Opened the Arduino IDE Serial Monitor.<br>3. Placed the device outdoors and waited for satellite lock.<br>4. Verified that valid coordinates and satellite counts were printed. |
-| **Expected result** | After a cold-start acquisition period (approx. 30-60 seconds outdoors), the serial monitor should continuously output valid latitude, longitude, altitude, and active satellite count. |
-| **Observed result** | The module successfully acquired 7 satellites within 45 seconds. The Serial Monitor printed stable latitude and longitude values matching our outdoor test coordinates, along with an accurate altitude reading. |
+| Test Item | Description |
+| :--- | :--- |
+| **Test Setup** | M5Stamp S3 microcontroller running software-in-the-loop (SITL) testing. The custom `GPS` class uses `TinyGPSPlus` to parse mock NMEA sentences injected via software (`feedData()`). Connected to a PC via USB with Serial Monitor output at 115200 baud. |
+| **Test Procedure** | 1. Uploaded the test sketch containing valid, checksum-compliant NMEA sentences to the M5Stamp S3.<br>2. Opened the Arduino IDE Serial Monitor at 115200 baud.<br>3. Verified that the custom `GPS` class successfully intercepted, decoded, and parsed the mock data stream. |
+| **Expected Result** | The parser should successfully validate the NMEA checksums, extract the structured data fields, and output clean decimal coordinates, altitude, and satellite counts to the Serial Monitor. |
+| **Observed Result** | The parser successfully decoded the mock NMEA sentences. The Serial Monitor printed stable latitude, longitude, altitude, and satellite values, confirming that the C++ library architecture and parsing logic operate correctly prior to physical hardware deployment. |
 
 ![GPS Test Code Output](images/TestCode.png)
 
