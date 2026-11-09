@@ -4,7 +4,7 @@
 | **Team** | Desert Link |
 | **Module** | GPS (RAK12501 / Quectel L76K) |
 | **Date** | November 7, 2026 |
-| **Repository link** | ... |
+| **Repository link** |https://github.com/Cookiepie2256/ECE3730_Team-A_DesertLink/tree/main/modules/GPS|
 
 ## 1. Library Use and Interface
 
@@ -68,9 +68,7 @@ void loop() {
 | **Expected result** | After a cold-start acquisition period (approx. 30-60 seconds outdoors), the serial monitor should continuously output valid latitude, longitude, altitude, and active satellite count. |
 | **Observed result** | The module successfully acquired 7 satellites within 45 seconds. The Serial Monitor printed stable latitude and longitude values matching our outdoor test coordinates, along with an accurate altitude reading. |
 
-> **[Insert screenshot or photo here]**
->
-> *Caption: [Describe what the image shows.]*
+![GPS Test Code Output](images/TestCode.png)
 
 ## 3. Current Status and Integration Notes
 
