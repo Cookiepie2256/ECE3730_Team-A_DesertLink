@@ -83,7 +83,7 @@ void loop() {
 ## Submission Checklist
 
 - [x] Completed report with description of test results
-- [x] Library header file (`RAK12501_GPS.h`) and implementation file (`RAK12501_GPS.cpp`)
-- [x] Test sketch (`.ino`) that calls the library’s public functions
+- [x] Library header file (`GPS.h`) and implementation file (`GPS.cpp`)
+- [x] Test sketch (`M5StampS3_GPSTest.ino`) that calls the library’s public functions
 - [x] Short demonstration video showing the library working
 - [x] All files pushed to the team GitHub repository
