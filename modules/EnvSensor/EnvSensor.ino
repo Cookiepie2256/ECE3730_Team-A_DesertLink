@@ -1,16 +1,13 @@
 // EnvSensor.ino
 // Test sketch for the DesertLink Environmental Sensor Module.
 // Board: WisBlock RAK4631. Serial Monitor: 115200 baud.
-//
-// Demo: you should see "Sensor found", then a reading every 2 s.
-// Breathe on the sensor -> humidity goes up. Unplug it -> "Valid: 0".
 #include "EnvSensor.h"
 
 EnvSensor env;
 
 void setup() {
   Serial.begin(115200);
-  while (!Serial && millis() < 5000) delay(10);   // wait for Serial Monitor
+  while (!Serial && millis() < 5000) delay(10);
 
   Serial.println("DesertLink EnvSensor test");
   if (env.begin()) Serial.println("Sensor found");
@@ -18,15 +15,11 @@ void setup() {
 }
 
 void loop() {
-  // These three values are what DataPacket::updateEnvironment() receives
   if (env.read()) {
-    // The library gives whole numbers (2345 = 23.45 C). Divide by 100 to print real units.
-    Serial.print("Temp: ");       Serial.print(env.getTempC100() / 100.0, 2);    Serial.print(" C");
-    Serial.print("  Humidity: "); Serial.print(env.getHumidity100() / 100.0, 2); Serial.print(" %");
-    Serial.println("  Valid: 1");
+    Serial.print("Temp: ");       Serial.print(env.getTempF(), 2);    Serial.print(" F");
+    Serial.print("  Humidity: "); Serial.print(env.getHumidity(), 2); Serial.println(" %");
   } else {
-    Serial.println("ERROR: bad reading  Valid: 0");
+    Serial.println("ERROR: bad reading");
   }
-
   delay(2000);
 }
