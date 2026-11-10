@@ -6,7 +6,7 @@
 ## Individual Contribution: Andy Holt
 
 ### My Responsibility
-I built the Environmental Sensor Module (`EnvSensor`). It reads temperature and humidity from the RAK1901 (SHTC3) sensor over I2C on the RAK4631, checks that the values are good, and passes them to the data packet module as scaled integers.
+I built the Environmental Sensor Module (`EnvSensor`). It reads temperature and humidity from the RAK1901 (SHTC3) sensor over I2C on the RAK4631, checks that the values are good, and passes them to the data packet module in °F and %.
 
 **Code:** [modules/EnvSensor](https://github.com/Cookiepie2256/ECE3730_Team-A_DesertLink/tree/main/modules/EnvSensor)
 
@@ -40,8 +40,8 @@ Tested on the RAK4631.
 | Test | Expected | Observed |
 |------|----------|----------|
 | Upload and run | Readings every 2 s | Pass |
-| Normal reading | Values near room temp and humidity | Pass: about 22.5 C, 31 % |
-| No sensor attached | "Valid: 0" | Pass |
+| Normal reading | Values near room temp and humidity | Pass: about 72.5 F, 31 % |
+| No sensor attached | "ERROR: bad reading" | Pass |
 
 **Screenshot:**
 ![Serial output](images/EnvSensor_serial.png)
