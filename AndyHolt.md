@@ -35,7 +35,7 @@ packet.updateEnvironment(env.getTempC100(), env.getHumidity100(), env.isValid())
 | Output | Valid flag | `bool` | Malainy's `updateEnvironment()` (packet flag bit 1) |
 
 ### My Test Results
-Tested on the RAK4631 using fake data mode (sensor not attached yet).
+Tested on the RAK4631.
 
 | Test | Expected | Observed |
 |------|----------|----------|
