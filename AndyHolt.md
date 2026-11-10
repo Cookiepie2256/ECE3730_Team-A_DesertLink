@@ -22,7 +22,7 @@ Needs the **Adafruit SHTC3** library.
 EnvSensor env;
 env.begin();   // in setup()
 env.read();    // in loop()
-packet.updateEnvironment(env.getTempC100(), env.getHumidity100(), env.isValid());
+codec.packEnvironment(env.getTempF(), env.getHumidity());
 ```
 
 ### My Inputs and Outputs
@@ -30,9 +30,9 @@ packet.updateEnvironment(env.getTempC100(), env.getHumidity100(), env.isValid())
 |-----------|------|--------------|-----------------------|
 | Input | Temperature and humidity | I2C, address 0x70 | RAK1901 sensor |
 | Input | Read request | `env.read()` | Main loop |
-| Output | Temperature | `int16_t`, °C × 100 (23.45 °C = 2345) | Malainy's `updateEnvironment()` |
-| Output | Humidity | `uint16_t`, % × 100 (35.20 % = 3520) | Malainy's `updateEnvironment()` |
-| Output | Valid flag | `bool` | Malainy's `updateEnvironment()` (packet flag bit 1) |
+| Output | Temperature | `float`, °F | Malainy's `packEnvironment()` |
+| Output | Humidity | `float`, % | Malainy's `packEnvironment()` |
+| Output | Valid flag | `bool` | Main loop (skip bad readings) |
 
 ### My Test Results
 Tested on the RAK4631.
