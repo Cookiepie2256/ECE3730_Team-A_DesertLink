@@ -35,11 +35,13 @@ packet.updateEnvironment(env.getTempC100(), env.getHumidity100(), env.isValid())
 | Output | Valid flag | `bool` | Malainy's `updateEnvironment()` (packet flag bit 1) |
 
 ### My Test Results
+Tested on the RAK4631 using fake data mode (sensor not attached yet).
+
 | Test | Expected | Observed |
 |------|----------|----------|
-| Startup | "Sensor found" | _TODO_ |
-| Room reading | Close to room temp and humidity | _TODO_ |
-| Breathe on sensor | Humidity goes up | _TODO_ |
-| Unplug sensor | "Valid: 0" | _TODO_ |
+| Upload and run | Readings every 2 s | Pass |
+| Normal reading | Values near room temp and humidity | Pass: about 22.5 C, 31 % |
+| No sensor attached | "Valid: 0" | Pass |
 
-**Screenshot:** _TODO_
+**Screenshot:**
+![Serial output](images/EnvSensor_serial.png)
