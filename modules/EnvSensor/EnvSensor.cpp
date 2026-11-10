@@ -5,39 +5,34 @@
 
 bool EnvSensor::begin() {
 #ifdef WB_IO2
-  // RAK19007: WB_IO2 turns on power to the sensor slots
-  pinMode(WB_IO2, OUTPUT);
+  pinMode(WB_IO2, OUTPUT);     // turn on power to the sensor slot
   digitalWrite(WB_IO2, HIGH);
   delay(10);
 #endif
-  found = sensor.begin();   // also starts I2C (Wire)
+  found = sensor.begin();
   return found;
 }
 
 bool EnvSensor::read() {
   valid = false;
+  if (!found && !begin()) return false;   // retry if sensor was missing
 
-  // If the sensor was missing, try to find it again (plugged in late)
-  if (!found && !begin()) return false;
-
-  sensors_event_t humEvent, tempEvent;
-  if (!sensor.getEvent(&humEvent, &tempEvent)) {
-    found = false;            // lost the sensor, retry next time
+  sensors_event_t h, t;
+  if (!sensor.getEvent(&h, &t)) {
+    found = false;
     return false;
   }
 
-  float t = tempEvent.temperature;
-  float h = humEvent.relative_humidity;
+  float c = t.temperature;
+  float rh = h.relative_humidity;
+  if (isnan(c) || isnan(rh) || c < -40 || c > 125 || rh < 0 || rh > 100) return false;
 
-  // Reject impossible values (SHTC3 range is -40..125 C, 0..100 %)
-  if (isnan(t) || isnan(h) || t < -40 || t > 125 || h < 0 || h > 100) return false;
-
-  tempC100 = (int16_t)lroundf(t * 100);
-  hum100   = (uint16_t)lroundf(h * 100);
+  tempF = c * 9.0 / 5.0 + 32.0;
+  hum   = rh;
   valid = true;
   return true;
 }
 
-int16_t  EnvSensor::getTempC100()    { return tempC100; }
-uint16_t EnvSensor::getHumidity100() { return hum100; }
-bool     EnvSensor::isValid()        { return valid; }
+float EnvSensor::getTempF()    { return tempF; }
+float EnvSensor::getHumidity() { return hum; }
+bool  EnvSensor::isValid()     { return valid; }
