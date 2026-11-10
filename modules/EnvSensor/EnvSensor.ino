@@ -20,8 +20,9 @@ void setup() {
 void loop() {
   // These three values are what DataPacket::updateEnvironment() receives
   if (env.read()) {
-    Serial.print("Temp: ");       Serial.print(env.getTempC100());     // 2345 = 23.45 C
-    Serial.print("  Humidity: "); Serial.print(env.getHumidity100());  // 3520 = 35.20 %
+    // The library gives whole numbers (2345 = 23.45 C). Divide by 100 to print real units.
+    Serial.print("Temp: ");       Serial.print(env.getTempC100() / 100.0, 2);    Serial.print(" C");
+    Serial.print("  Humidity: "); Serial.print(env.getHumidity100() / 100.0, 2); Serial.print(" %");
     Serial.println("  Valid: 1");
   } else {
     Serial.println("ERROR: bad reading  Valid: 0");
