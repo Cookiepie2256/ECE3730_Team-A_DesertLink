@@ -1,18 +1,29 @@
 #include "TimeSlotScheduler.h"
 
-TimeSlotScheduler::TimeSlotScheduler(uint8_t id, uint32_t slotMs, uint32_t total)
-    : nodeID(id), slotDurationMs(slotMs), totalNodes(total), lastSentCycle(0xFFFFFFFF) {
-    cycleDurationMs = slotDurationMs * totalNodes;
+TimeSlotScheduler::TimeSlotScheduler(uint8_t id, uint32_t slotMs, uint8_t total)
+    : nodeID(id < 1 ? 1 : id),
+      slotDurationMs(slotMs == 0 ? 2000 : slotMs),
+      totalNodes(total == 0 ? 3 : total),
+      lastSentCycle(0xFFFFFFFFFFFFFFFFULL) {
+    cycleDurationMs = slotDurationMs * (uint32_t)totalNodes;
 }
 
 uint32_t TimeSlotScheduler::getSlotOffsetMs() const {
-    // Calculates slot offset: Node 1 -> 0ms, Node 2 -> 2000ms, Node 3 -> 4000ms
-    return (nodeID - 1) * slotDurationMs;
+    // Node 1 -> 0ms, Node 2 -> 2000ms, Node 3 -> 4000ms
+    return (uint32_t)(nodeID - 1) * slotDurationMs;
+}
+
+uint32_t TimeSlotScheduler::getCycleDurationMs() const {
+    return cycleDurationMs;
 }
 
 bool TimeSlotScheduler::isMyTurn(uint64_t currentTimeMs) {
-    uint32_t currentCycle = currentTimeMs / cycleDurationMs;
-    uint32_t timeInCycle = currentTimeMs % cycleDurationMs;
+    if (nodeID > totalNodes || cycleDurationMs == 0) {
+        return false;
+    }
+
+    uint64_t currentCycle = currentTimeMs / cycleDurationMs;
+    uint32_t timeInCycle = (uint32_t)(currentTimeMs % cycleDurationMs);
     uint32_t slotStart = getSlotOffsetMs();
     uint32_t slotEnd = slotStart + slotDurationMs;
 
