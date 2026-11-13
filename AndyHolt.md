@@ -6,22 +6,42 @@
 ## Individual Contribution: Andy Holt
 
 ### My Responsibility
-I am developing the Environmental Sensor Module. It is a C++ class that initializes the RAK1901 (SHTC3) temperature and humidity sensor over I2C on the RAK4631, takes readings, checks that they are valid, and passes them to the data packet module for transmission.
+I built the Environmental Sensor Module (`EnvSensor`). It reads temperature and humidity from the RAK1901 (SHTC3) sensor over I2C on the RAK4631, checks that the values are good, and passes them to the data packet module in °F and %.
+
+**Code:** [modules/EnvSensor](https://github.com/Cookiepie2256/ECE3730_Team-A_DesertLink/tree/main/modules/EnvSensor)
 
 ### My Files
-- `EnvSensor.h`: Class declaration for the environmental sensor (init, read, getters, status flag).
-- `EnvSensor.cpp`: Implements sensor startup, I2C reads, range checking, and error handling.
+- `EnvSensor.h`: class declaration
+- `EnvSensor.cpp`: sensor startup, reading, and range checks
+- `EnvSensor.ino`: test sketch (Serial Monitor at 115200)
+
+Needs the **Adafruit SHTC3** library.
+
+### How to Use
+```cpp
+EnvSensor env;
+env.begin();   // in setup()
+env.read();    // in loop()
+codec.packEnvironment(env.getTempF(), env.getHumidity());
+```
 
 ### My Inputs and Outputs
-| Direction | Data | Type / Units / Format | Source or Destination |
-|-----------|------|-----------------------|-----------------------|
-| Input | Raw temperature and humidity | I2C data from SHTC3 (address 0x70) | RAK1901 sensor |
-| Input | Read request | Function call | Main loop |
-| Output | Temperature | `float`, °C | Data packet module |
-| Output | Relative humidity | `float`, %RH | Data packet module |
-| Output | Sensor status | `bool` (true = valid reading) | Data packet module / main loop |
+| Direction | Data | Type / Units | Source or Destination |
+|-----------|------|--------------|-----------------------|
+| Input | Temperature and humidity | I2C, address 0x70 | RAK1901 sensor |
+| Input | Read request | `env.read()` | Main loop |
+| Output | Temperature | `float`, °F | Malainy's `packEnvironment()` |
+| Output | Humidity | `float`, % | Malainy's `packEnvironment()` |
+| Output | Valid flag | `bool` | Main loop (skip bad readings) |
 
-### My Test Plan
-1. **Room reading:** Read the sensor at room temperature and compare to a reference thermometer. Expected: temperature within ±1 °C, humidity within ±5 %RH.
-2. **Response test:** Breathe on the sensor. Expected: humidity and temperature rise within a few seconds, then return to baseline.
-3. **Fault test:** Unplug the sensor and call read. Expected: status returns false and no bad values are sent.
+### My Test Results
+Tested on the RAK4631.
+
+| Test | Expected | Observed |
+|------|----------|----------|
+| Upload and run | Readings every 2 s | Pass |
+| Normal reading | Values near room temp and humidity | Pass: about 72.5 F, 31 % |
+| No sensor attached | "ERROR: bad reading" | Pass |
+
+**Screenshot:**
+![Serial output](images/EnvSensor_serial.png)
