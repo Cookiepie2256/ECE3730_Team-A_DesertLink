@@ -36,7 +36,3 @@ private:
 };
 
 #endif
-    void printAllNodes();
-};
-//Header Files (.h): Declare class structures, constants, and function prototypes. *for my memory
-#endif
